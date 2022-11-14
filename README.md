@@ -1,6 +1,6 @@
 # fr_printf
 
-{-0.} ==============================================[b2]
+{-0.} ==============================================[b2] <br>
 s = -<extra_spaces>.<output_len>
 c = -<extra_spaces>.<no_efect>
 [d/i/u/x/X/p] = -<extra_spaces>.<prefix_with_n_0>
