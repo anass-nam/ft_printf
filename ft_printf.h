@@ -1,10 +1,9 @@
 #ifndef FT_PRINTF_H
 #define FT_PRINTF_H
 
-#include <stdlib.h>
+#include "libft/libft.h"
 #include <stdio.h>
-#include <string.h>
-#include <strings.h>
+
 
 typedef struct s_container
 {
@@ -12,6 +11,9 @@ typedef struct s_container
     int w;
     int p;
     int c;
+	int h;
+	int m;
+	char t;
     char pr;
     char *content;
 } t_con;

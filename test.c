@@ -1,4 +1,4 @@
-#include "libft/libft.h"
+
 
 static void	ft_memclear(char *mem, int n);
 static char	*ft_realoc(char *t, int l);
