@@ -3,6 +3,7 @@
 int ft_printf(const char *format, ...)
 {
 	va_list args;
+	t_list output;
 	char *f;
 	int i;
 
@@ -29,7 +30,7 @@ int main(void)
 
 	s = -48;
 	ft_printf("% -.4d1\n", s);
-	printf("% -.4x1\n", s);
+	printf("% -.4d1\n", s);
 	return 0;
 }
 

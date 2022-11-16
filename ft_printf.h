@@ -24,8 +24,9 @@ typedef struct s_container
 # define BIGGER(a, b) a > b ? a : b
 # define SMALLER(a, b) a < b ? a : b
 
+void ft_converter(va_list a, t_con *f, char c);
 int ft_printf(const char *, ...);
-void ft_helper(va_list a, char *s);
-char *ft_gen(va_list a, char *s, int *i);
+
+
 
 #endif
