@@ -4,23 +4,21 @@ int ft_printf(const char *format, ...)
 {
 	va_list args;
 	char *f;
-	char **output;
 	int i;
 
-	i = 0;
 	f = ft_strdup(format);
 	if (f)
 	{
-		output = ft_helper(args, f);
-		if (output)
+		va_start(args, format);
+		i = 0;
+		while (*(f + i))
 		{
-			while (*output)
-			{
-				i += ft_strlen(*output);
-				ft_putstr_fd(*output, 1);
-			}
-			return (i);
+			if (*(f + i) == '%')
+				ft_putstr_fd(ft_gen(args, f, &i), 1);
+			ft_putchar_fd(*(f + i), 1);
+			i++;
 		}
+		va_end(args);
 	}
 	return (-1);
 }
@@ -29,8 +27,9 @@ int main(void)
 {
 	int s;
 
-	s = 48;
-	ft_printf("%#+0 -d", s);
+	s = -48;
+	ft_printf("% -.4d1\n", s);
+	printf("% -.4x1\n", s);
 	return 0;
 }
 
