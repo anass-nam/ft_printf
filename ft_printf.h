@@ -1,32 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anammal <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/17 15:46:35 by anammal           #+#    #+#             */
+/*   Updated: 2022/11/17 15:46:39 by anammal          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #ifndef FT_PRINTF_H
-#define FT_PRINTF_H
+# define FT_PRINTF_H
 
-# include "libft/libft.h"
 # include <stdarg.h>
-# include <stdio.h>
+# include <unistd.h>
 
+typedef unsigned long	t_ul;
 
-typedef struct s_container
-{
-    int hashtag;
-    int minus;
-    int zero;
-    int prefix;
-    int width;
-    int precision;
-	int clen;
-	int dot;
-	char p;
-	char *content;
-	char *conversion;
-} t_con;
-
-# define BIGGER(a, b) a > b ? a : b
-# define SMALLER(a, b) a < b ? a : b
-
-void ft_converter(va_list a, t_con *f, char c);
-int ft_printf(const char *, ...);
-
-
+int		ft_printf(const char *format, ...);
+void	ft_putubase(t_ul n, char *base, t_ul bl, int *counter);
+void	ft_putnbr(int n, int *counter);
+void	ft_putstr(char *s, int *counter);
+void	ft_putchar(char c, int *counter);
 
 #endif

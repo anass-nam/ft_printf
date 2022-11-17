@@ -1,37 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anammal <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/17 15:46:12 by anammal           #+#    #+#             */
+/*   Updated: 2022/11/17 15:46:19 by anammal          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "ft_printf.h"
 
-int ft_printf(const char *format, ...)
-{
-	va_list args;
-	t_list output;
-	char *f;
-	int i;
+static void	ft_converter(va_list a, char c, int *counter);
 
-	f = ft_strdup(format);
-	if (f)
+int	ft_printf(const char *format, ...)
+{
+	va_list	args;
+	int		i;
+	int		counter;
+
+	if (format)
 	{
 		va_start(args, format);
 		i = 0;
-		while (*(f + i))
+		counter = 0;
+		while (*(format + i))
 		{
-			if (*(f + i) == '%')
-				ft_putstr_fd(ft_gen(args, f, &i), 1);
-			ft_putchar_fd(*(f + i), 1);
+			if (*(format + i) == '%')
+				ft_converter(args, *(format + (++i)), &counter);
+			else
+				ft_putchar(*(format + i), &counter);
 			i++;
 		}
 		va_end(args);
+		return (counter);
 	}
 	return (-1);
 }
 
-int main(void)
+static void	ft_converter(va_list a, char c, int *counter)
 {
-	int s;
-
-	s = -48;
-	ft_printf("% -.4d1\n", s);
-	printf("% -.4d1\n", s);
-	return 0;
+	if (c == 'i' || c == 'd')
+		ft_putnbr(va_arg(a, int), counter);
+	else if (c == 's')
+		ft_putstr((char *)va_arg(a, void *), counter);
+	else if (c == 'x')
+		ft_putubase(va_arg(a, unsigned int), "0123456789abcdef", 16, counter);
+	else if (c == 'X')
+		ft_putubase(va_arg(a, unsigned int), "0123456789ABCDEF", 16, counter);
+	else if (c == 'u')
+		ft_putubase(va_arg(a, unsigned int), "0123456789", 10, counter);
+	else if (c == 'p')
+	{
+		ft_putstr("0x", counter);
+		ft_putubase((t_ul)va_arg(a, void *), "0123456789abcdef", 16, counter);
+	}
+	else if (c == 'c')
+		ft_putchar(va_arg(a, int), counter);
+	else
+		ft_putchar(c, counter);
 }
-
-	// ar = va_arg(args, void *);

@@ -1,80 +1,60 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anammal <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/17 15:46:25 by anammal           #+#    #+#             */
+/*   Updated: 2022/11/17 15:46:28 by anammal          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "ft_printf.h"
 
-void	ft_putchar_fd(char c, int *counter)
+void	ft_putubase(t_ul n, char *base, t_ul bl, int *counter)
+{
+	if (n >= bl)
+	{
+		ft_putubase(n / bl, base, bl, counter);
+		ft_putchar(base[n % bl], counter);
+	}
+	else
+		ft_putchar(base[n], counter);
+}
+
+void	ft_putnbr(int n, int *counter)
+{
+	if (n == -2147483648)
+	{
+		ft_putchar('-', counter);
+		ft_putchar('2', counter);
+		ft_putnbr(147483648, counter);
+	}
+	else if (n < 0)
+	{
+		ft_putchar('-', counter);
+		ft_putnbr(n * -1, counter);
+	}
+	else if (n > 9)
+	{
+		ft_putnbr((n / 10), counter);
+		ft_putchar("0123456789"[n % 10], counter);
+	}
+	else
+		ft_putchar("0123456789"[n % 10], counter);
+}
+
+void	ft_putstr(char *s, int *counter)
+{
+	if (s)
+		while (*s)
+			ft_putchar(*s++, counter);
+	else
+		ft_putstr("(null)", counter);
+}
+
+void	ft_putchar(char c, int *counter)
 {
 	write(1, &c, 1);
 	(*counter)++;
-}
-
-int	ft_isdigit(int c)
-{
-	return (c >= 48 && c <= 57);
-}
-
-int	ft_mini_atoi(const char *str)
-{
-	int	r;
-
-	r = 0;
-	while (ft_isdigit(*str))
-		r = r * 10 + ((*str++) - 48);
-	return (r);
-}
-
-#include "ft_printf.h"
-
-void ft_converter(va_list a, t_con *f, char c)
-{
-	if (c == 'i' || c == 'd')
-		f->content = ft_itoa(va_arg(a, int));
-	else if (c == 's')
-		f->content = ft_strdup(va_arg(a, char *));
-	else if (c == 'x')
-		f->content = itob(va_arg(a, unsigned int), "0123456789abcdef", 16);
-	else if (c == 'X')
-		f->content = itob(va_arg(a, unsigned int), "0123456789ABCDEF", 16);
-	else if (c == 'u')
-		f->content = itob(va_arg(a, unsigned int), "0123456789", 10);
-	else if (c == 'p')
-		f->content = itob(va_arg(a, unsigned int), "0123456789ABCDEF", 16);
-	else if (c == 'c')
-		f->content = ctos(va_arg(a, char));
-	else if (c == '%')
-		f->content = ctos(va_arg(a, char));
-	else
-		f->content = NULL;
-}
-
-static char *itob(unsigned int n, char *base, int bl)
-{
-    char *ret;
-    int i;
-    unsigned int nb;
-
-    nb = n;
-    i = 0;
-    while (++i && nb > 0)
-        nb /= bl;
-    ret = (char *)malloc(i * sizeof(char));
-    if (ret)
-    {
-        *(ret + --i) = '\0';
-        if (n == 0)
-            *ret = '0';
-        while (n > 0)
-        {
-            *(ret + --i) = base[n % bl];
-            n /= bl;
-        }
-        return ret;
-    }
-    return (NULL);
-}
-
-static char *ctos(char c)
-{
-	char ret[2];
-
-	ret[0] = c;
-	ret[1] = '\n';
-	return (ret);
 }
