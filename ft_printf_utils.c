@@ -38,10 +38,10 @@ void	ft_putnbr(int n, int *counter)
 	else if (n > 9)
 	{
 		ft_putnbr((n / 10), counter);
-		ft_putchar("0123456789"[n % 10], counter);
+		ft_putchar(DBASE[n % 10], counter);
 	}
 	else
-		ft_putchar("0123456789"[n % 10], counter);
+		ft_putchar(DBASE[n % 10], counter);
 }
 
 void	ft_putstr(char *s, int *counter)

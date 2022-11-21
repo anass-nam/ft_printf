@@ -1,6 +1,6 @@
 NAME = libftprintf.a
 SRC =	ft_printf.c ft_printf_utils.c
-CFLAGS += -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 OBJS = $(SRC:.c=.o)
 R        := $(shell tput -Txterm setaf 1)
 G        := $(shell tput -Txterm setaf 2)
@@ -12,7 +12,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@ar rcs $@ $(OBJS)
 
-%.o: %.c $(NAME:.a=.h)
+%.o: %.c ft_printf.h
 	@echo $(Y) Compiling: $< ... Done!
 	@cc $(CFLAGS) -c $< \
 
