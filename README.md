@@ -1,5 +1,5 @@
 # ft_printf
-##mini printf without flags/width/precision, for printing the following format:
+mini printf without flags/width/precision, for printing the following format:
 
 • %c    Prints a single character.<br>
 • %s    Prints a string (as defined by the common C convention).<br>
